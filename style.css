@@ -1,0 +1,633 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f7f8fc;
+    min-height: 100vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8f8f8f;
+}
+
+/* Background animation */
+.bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: move 8s infinite alternate ease-in-out;
+}
+
+.one {
+    width: 300px;
+    height: 300px;
+    background: rgba(180,180,180,0.25);
+    top: 10%;
+    left: 10%;
+}
+
+.two {
+    width: 250px;
+    height: 250px;
+    background: rgba(100,100,100,0.1);
+    bottom: 10%;
+    right: 10%;
+}
+
+@keyframes move {
+    from { transform: translateY(0px); }
+    to { transform: translateY(50px); }
+}
+
+/* Landing Page */
+.main-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 420px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+    z-index: 2;
+}
+
+.login-box h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    color: gray;
+    margin-bottom: 25px;
+}
+
+/* Toggle */
+.toggle-box {
+    display: flex;
+    background: #ececec;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.toggle-box button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.toggle-box .active {
+    background: black;
+    color: white;
+}
+
+/* Login Inputs */
+input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #d0d0d0;
+    border-radius: 12px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.login-btn {
+    background: black;
+    color: white;
+}
+
+.register-btn {
+    margin-top: 10px;
+    background: #ececec;
+}
+
+/* Bottom Navbar */
+.bottom-nav {
+    position: fixed;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 35px;
+    background: transparent;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    position: relative;
+}
+
+.bottom-nav a:hover {
+    color: grey;
+}
+
+.bottom-nav a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -8px;
+    background: grey;
+    transition: 0.3s;
+}
+
+.bottom-nav a:hover::after {
+    width: 100%;
+}
+
+/* Register */
+.register-wrapper {
+    padding: 50px;
+}
+
+.register-card {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+}
+
+.register-top {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.register-top h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.register-top p {
+    color: #777;
+}
+
+/* Sections */
+.section-card {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 25px;
+}
+
+.section-card h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+/* Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 22px;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box label {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.input-box input,
+.input-box select,
+.input-box textarea {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    background: white;
+}
+
+.input-box input:focus,
+.input-box select:focus,
+.input-box textarea:focus {
+    outline: none;
+    border-color: #6a5cff;
+}
+
+.input-box textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.input-box.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Upload Cards */
+.upload-card {
+    border: 2px dashed #d7d7ff;
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+}
+
+.upload-card label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.upload-card input {
+    width: 100%;
+}
+
+/* Terms Card */
+.terms-card {
+    background: #f6f4ff;
+    border: 1px solid #e7e3ff;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.terms-card h2 {
+    margin-bottom: 20px;
+}
+
+.terms-box h3 {
+    margin-bottom: 18px;
+}
+
+.terms-box + .terms-box {
+    margin-top: 12px;
+}
+
+.terms-box label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    line-height: 1.4;
+}
+
+.terms-box input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.terms-box a {
+    color: #6a5cff;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.terms-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terms-line input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.terms-line label {
+    margin: 0;
+    line-height: 1;
+}
+
+.terms-line a {
+    color: #6a5cff;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: #fff;
+    width: min(92%, 820px);
+    margin: 3% auto;
+    padding: 32px;
+    border-radius: 18px;
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.24);
+}
+
+.modal-content h2 {
+    font-size: 28px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid #e8e8ef;
+    padding: 0 52px 14px 0;
+}
+
+.close-btn {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+}
+
+.terms-content {
+    width: 100%;
+    max-width: none;
+    padding-right: 10px;
+}
+
+.terms-content p {
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 16px;
+    color: #333;
+    padding: 16px 18px;
+    background: #f7f8ff;
+    border-left: 4px solid #5a4bff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(82, 75, 255, 0.06);
+}
+
+.terms-content p:last-child {
+    margin-bottom: 0;
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #6c63ff;
+    border-radius: 10px;
+}
+
+/* Submit */
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(90deg,#6a5cff,#4f46e5);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* OTP Page */
+.otp-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.otp-box {
+    width: 420px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.otp-box input {
+    width: 100%;
+    padding: 14px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.otp-box button {
+    width: 100%;
+    padding: 14px;
+    background: black;
+    color: white;
+}
+
+/* Terms Modal */
+.terms-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.terms-modal .terms-content {
+    width: 600px;
+    max-width: 85%;
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: popup 0.25s ease;
+}
+
+@keyframes popup {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.terms-header {
+    position: relative;
+    padding: 22px 25px;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+}
+
+.terms-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.terms-header button {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.terms-scroll {
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 25px;
+    line-height: 1.8;
+}
+
+.terms-scroll h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.terms-scroll p {
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: calc(100% - 28px);
+        margin: 20px auto;
+        padding: 24px 18px;
+        max-height: calc(100vh - 40px);
+    }
+
+    .modal-content h2 {
+        font-size: 24px;
+    }
+
+    .close-btn {
+        right: 18px;
+        top: 17px;
+    }
+
+    .terms-content {
+        padding-right: 4px;
+    }
+
+    .terms-content p {
+        font-size: 15px;
+        line-height: 1.65;
+        padding: 14px 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* pop up success and error */ 
+.popup-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.popup-box {
+    width: 360px;
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    animation: popupScale 0.4s ease;
+}
+
+@keyframes popupScale {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.popup-icon {
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    border-radius: 50%;
+    font-size: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success-icon {
+    background: #e8fff0;
+    color: green;
+    animation: bounce 0.6s ease;
+}
+
+.error-icon {
+    background: #ffeaea;
+    color: red;
+    animation: shake 0.5s ease;
+}
+
+@keyframes bounce {
+    0% { transform: scale(0.5); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-8px); }
+}

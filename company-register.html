@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+/* register html */
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="register-wrapper">
+        <div class="register-card">
+
+            <div class="register-top">
+                <h1>Company Registration</h1>
+                <p>Register your company to hire interns and manage opportunities</p>
+            </div>
+
+            <form action="company-register.php" method="POST">
+
+                <div class="section-card">
+                    <h2>Company Information</h2>
+
+                    <div class="form-grid">
+                        <div class="input-box">
+                            <label>Company Name</label>
+                            <input type="text" name="company_name" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Official Email</label>
+                            <input type="email" name="email" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Contact Number</label>
+                            <input type="tel" name="contact" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Industry Type</label>
+                            <select name="industry_type" required>
+                                <option>IT</option>
+                                <option>Marketing</option>
+                                <option>Finance</option>
+                                <option>Design</option>
+                            </select>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Company Size</label>
+                            <select name="company_size" required>
+                                <option>1-10</option>
+                                <option>10-50</option>
+                                <option>50-200</option>
+                                <option>200+</option>
+                            </select>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Founded Year</label>
+                            <input type="number" name="founded_year" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Company Website</label>
+                            <input type="url" name="website">
+                        </div>
+
+                        <div class="input-box">
+                            <label>Full Address</label>
+                            <input type="text" name="full_address" required>
+                        </div>
+
+                        <div class="input-box full-width">
+                            <label>Company Description</label>
+                            <textarea name="description" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h2>Location</h2>
+
+                    <div class="form-grid">
+                        <div class="input-box">
+                            <label>Country</label>
+                            <input type="text" name="country" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>State</label>
+                            <input type="text" name="state" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>City</label>
+                            <input type="text" name="city" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Pin Code (Optional)</label>
+                            <input type="text" name="pin_code">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h2>Security</h2>
+
+                    <div class="form-grid">
+                        <div class="input-box">
+                            <label>Password</label>
+                            <input type="password" name="password" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm_password" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terms-card">
+                    <h2>Terms & Conditions</h2>
+
+                    <div class="terms-box">
+                        <label>
+                            <input type="checkbox" name="terms" required>
+                            Accept
+                            <a href="#" id="openCompanyTerms">Terms & Conditions</a>
+                        </label>
+                    </div>
+
+                    <div class="terms-box">
+                        <label>
+                            <input type="checkbox" name="hiring_policy" required>
+                            Agree to
+                            <a href="#" id="openHiringPolicies">Hiring Policies</a>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Register Company
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div id="companyTermsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeCompanyTerms">&times;</span>
+            <h2>Terms & Conditions</h2>
+
+            <div class="terms-content">
+                <p>1. The company must provide true, accurate, and updated registration information.</p>
+                <p>2. The official email and contact details must belong to an authorized company representative.</p>
+                <p>3. InternEdge may verify company details before approving hiring activity on the platform.</p>
+                <p>4. Any false information, misleading company profile, or misuse of the portal may lead to account suspension.</p>
+                <p>5. The company is responsible for keeping login credentials confidential and secure.</p>
+                <p>6. Company information may be used for verification, communication, and internship-related services.</p>
+                <p>7. InternEdge may contact the company for verification, support, policy updates, or opportunity review.</p>
+                <p>8. The company agrees not to post fraudulent, harmful, unpaid-misrepresented, or illegal opportunities.</p>
+                <p>9. Legal action may be taken if identity misuse, fraud, or harmful hiring activity is detected.</p>
+                <p>10. By registering, the company agrees to follow all platform terms, privacy rules, and service conditions.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="hiringPoliciesModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeHiringPolicies">&times;</span>
+            <h2>Hiring Policies</h2>
+
+            <div class="terms-content">
+                <p>1. All internship and job opportunities must include clear role details, eligibility requirements, location, duration, and compensation information where applicable.</p>
+                <p>2. Companies must evaluate students fairly and must not discriminate based on gender, religion, caste, disability, nationality, or personal background.</p>
+                <p>3. Selection, rejection, interview, and onboarding communication should be professional, timely, and respectful.</p>
+                <p>4. Companies must not request unnecessary personal documents, money, deposits, training fees, or sensitive information from students.</p>
+                <p>5. Internship tasks must match the posted role and should not include unsafe, illegal, misleading, or unrelated work.</p>
+                <p>6. If a stipend, certificate, letter of recommendation, or pre-placement offer is promised, the company must honor the stated terms.</p>
+                <p>7. Student data shared through InternEdge must be used only for recruitment and internship-related communication.</p>
+                <p>8. Companies should maintain a safe work environment and follow all applicable labor, internship, and workplace conduct rules.</p>
+                <p>9. InternEdge may review, edit, reject, or remove opportunities that violate hiring standards or platform trust.</p>
+                <p>10. Repeated complaints, fraud, harassment, or policy violations may result in restricted access or permanent removal from the platform.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setupModal(openId, modalId, closeId) {
+            const openButton = document.getElementById(openId);
+            const modal = document.getElementById(modalId);
+            const closeButton = document.getElementById(closeId);
+
+            openButton.onclick = function(e) {
+                e.preventDefault();
+                modal.style.display = "block";
+            };
+
+            closeButton.onclick = function() {
+                modal.style.display = "none";
+            };
+
+            modal.onclick = function(e) {
+                if (e.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        }
+
+        setupModal("openCompanyTerms", "companyTermsModal", "closeCompanyTerms");
+        setupModal("openHiringPolicies", "hiringPoliciesModal", "closeHiringPolicies");
+    </script>
+    <div id="popupModal" class="popup-modal">
+        <div class="popup-box">
+            <div class="popup-icon" id="popupIcon"></div>
+            <h2 id="popupTitle"></h2>
+            <p id="popupMessage"></p>
+        </div>
+    </div>
+</body>
+
+</html>
