@@ -87,8 +87,7 @@ export async function POST(request) {
 
       return NextResponse.json({
         success: true,
-        message: `Verification code sent to ${cleanEmail}`,
-        demoOtp: generatedOtp // Still provided as fallback/convenience in UI
+        message: `Verification code sent to ${cleanEmail}`
       });
     }
 

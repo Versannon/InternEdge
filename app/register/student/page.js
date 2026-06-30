@@ -35,7 +35,6 @@ export default function StudentRegistrationPage() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [inputOtp, setInputOtp] = useState('');
-  const [demoOtp, setDemoOtp] = useState('');
   const [otpLoading, setOtpLoading] = useState(false);
   const [otpMessage, setOtpMessage] = useState('');
   const [otpError, setOtpError] = useState('');
@@ -98,8 +97,7 @@ export default function StudentRegistrationPage() {
       });
       const data = await res.json();
       if (data.success) {
-        setDemoOtp(data.demoOtp);
-        setOtpMessage(`Code sent! (Demo OTP Code: ${data.demoOtp})`);
+        setOtpMessage('Verification code sent successfully to your email address!');
         setShowOtpModal(true);
       } else {
         setError(data.message || 'Failed to send OTP.');
@@ -815,11 +813,6 @@ export default function StudentRegistrationPage() {
                 Enter the 6-digit verification code sent to <strong>{personal.email}</strong>
               </p>
 
-              {demoOtp && (
-                <div style={{ padding: '0.6rem', background: 'var(--primary-light)', border: '1px solid #bfdbfe', borderRadius: 'var(--radius-sm)', color: 'var(--primary)', fontWeight: 600, fontSize: '0.85rem', marginBottom: '1rem' }}>
-                  🔑 Demo Code: <span style={{ letterSpacing: '2px', fontWeight: 800 }}>{demoOtp}</span>
-                </div>
-              )}
 
               {otpError && (
                 <div style={{ padding: '0.5rem', background: '#fef2f2', color: '#b91c1c', borderRadius: 'var(--radius-sm)', fontSize: '0.82rem', marginBottom: '0.8rem' }}>
@@ -834,7 +827,7 @@ export default function StudentRegistrationPage() {
                 style={{ textAlign: 'center', fontSize: '1.5rem', letterSpacing: '6px', fontWeight: 700, padding: '0.6rem' }}
                 value={inputOtp}
                 onChange={(e) => setInputOtp(e.target.value)}
-                placeholder="123456"
+                placeholder="******"
               />
             </div>
 
