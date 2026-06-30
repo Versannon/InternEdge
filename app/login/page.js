@@ -36,7 +36,9 @@ export default function LoginPage() {
 
       if (data.success) {
         loginUser(data.user, data.profile);
-        if (role === 'student') {
+        if (data.user.role === 'admin') {
+          router.push('/dashboard/admin');
+        } else if (data.user.role === 'student') {
           router.push('/dashboard/student');
         } else {
           router.push('/dashboard/company');

@@ -5,8 +5,14 @@ export async function GET(request) {
   try {
     const mockDb = getMockDb();
     
-    // Fetch from MySQL
-    const dbRes = await query('SELECT * FROM jobs ORDER BY id DESC');
+    // Fetch from MySQL (Only from Approved companies)
+    const dbRes = await query(`
+      SELECT jobs.* 
+      FROM jobs 
+      JOIN companies ON jobs.company_id = companies.id 
+      WHERE companies.status = 'Approved' 
+      ORDER BY jobs.id DESC
+    `);
     let jobsList = [];
     
     if (!dbRes.isMock && dbRes.rows) {

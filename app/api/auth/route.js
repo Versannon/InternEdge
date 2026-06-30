@@ -9,6 +9,48 @@ export async function POST(request) {
 
     // LOGIN ACTION
     if (action === 'login') {
+      // 0. Check Admins Table First
+      try {
+        const adminRes = await query('SELECT * FROM admins WHERE email = ?', [email]);
+        let adminUser = null;
+        if (!adminRes.isMock && adminRes.rows && adminRes.rows.length > 0) {
+          adminUser = adminRes.rows[0];
+        } else if (email === 'admin@internedge.edu') {
+          // Fail-safe mock fallback for admin login
+          adminUser = {
+            id: 1,
+            name: 'Super Admin',
+            email: 'admin@internedge.edu',
+            password: '$2y$10$wH60pIecf2W0s9C1K3d5e.cM86gV2i/4K5QoBsn2d2dI8B3N.'
+          };
+        }
+
+        if (adminUser) {
+          let isPassValid = false;
+          try {
+            let hash = adminUser.password;
+            if (hash.startsWith('$2y$')) {
+              hash = '$2a$' + hash.slice(4);
+            }
+            isPassValid = bcrypt.compareSync(password, hash);
+          } catch (e) {
+            isPassValid = (adminUser.password === password);
+          }
+          if (isPassValid) {
+            return NextResponse.json({
+              success: true,
+              message: 'Admin login successful',
+              user: { id: adminUser.id, email: adminUser.email, role: 'admin' },
+              profile: { id: adminUser.id, name: adminUser.name }
+            });
+          } else {
+            return NextResponse.json({ success: false, message: 'Invalid password' }, { status: 401 });
+          }
+        }
+      } catch (err) {
+        console.error("Admin check database error:", err.message);
+      }
+
       // 1. Try MySQL Database
       const table = role === 'student' ? 'students' : 'companies';
       const sql = `SELECT * FROM ${table} WHERE email = ?`;
@@ -27,7 +69,11 @@ export async function POST(request) {
         const passwordField = user.password || user.password_hash;
         let isPassValid = false;
         try {
-          isPassValid = bcrypt.compareSync(password, passwordField);
+          let hash = passwordField;
+          if (hash && hash.startsWith('$2y$')) {
+            hash = '$2a$' + hash.slice(4);
+          }
+          isPassValid = bcrypt.compareSync(password, hash);
         } catch (e) {
           // Plaintext fallback for initial development seeds
           isPassValid = (passwordField === password);
@@ -57,10 +103,7 @@ export async function POST(request) {
           }
         }
 
-        // If no user found, allow flexible mock logging for testing
-        if (!user && email && password) {
-          user = { id: Date.now(), email, role };
-        } else if (!user) {
+        if (!user) {
           return NextResponse.json({ success: false, message: 'Email not found' }, { status: 401 });
         }
       }

@@ -1,5 +1,16 @@
 import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 import { query, getMockDb } from '../../../lib/db';
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'kakadiyasuprince@gmail.com',
+    pass: 'jekb cfdp hqpz eznd',
+  },
+});
 
 export async function GET(request) {
   try {
@@ -9,7 +20,6 @@ export async function GET(request) {
 
     const mockDb = getMockDb();
 
-    // 1. Fetch Student Applications
     if (studentId) {
       const dbRes = await query('SELECT * FROM applications WHERE student_id = ? ORDER BY id DESC', [studentId]);
       let enrichedApps = [];
@@ -36,7 +46,6 @@ export async function GET(request) {
       return NextResponse.json({ success: true, applications: enrichedApps });
     }
 
-    // 2. Fetch Company Applications
     if (companyId) {
       let enrichedApps = [];
       let companyJobs = [];
@@ -99,7 +108,6 @@ export async function POST(request) {
 
     const mockDb = getMockDb();
     
-    // Check if already applied in MySQL
     try {
       const checkRes = await query('SELECT * FROM applications WHERE job_id = ? AND student_id = ?', [job_id, student_id]);
       if (!checkRes.isMock && checkRes.rows && checkRes.rows.length > 0) {
@@ -107,7 +115,6 @@ export async function POST(request) {
       }
     } catch (e) {}
 
-    // Insert in MySQL
     try {
       await query(
         'INSERT INTO applications (job_id, student_id, status, recruiter_notes) VALUES (?, ?, "Applied", "Application submitted successfully.")',
@@ -149,6 +156,7 @@ export async function PATCH(request) {
     const { application_id, status, notes } = body;
 
     const mockDb = getMockDb();
+    const appIndex = mockDb.applications.findIndex(a => a.id === Number(application_id));
 
     // Update in MySQL
     try {
@@ -160,10 +168,64 @@ export async function PATCH(request) {
       console.error("MySQL Application patch error:", dbErr.message);
     }
 
-    const appIndex = mockDb.applications.findIndex(a => a.id === Number(application_id));
     if (appIndex !== -1) {
       if (status) mockDb.applications[appIndex].status = status;
       if (notes !== undefined) mockDb.applications[appIndex].recruiter_notes = notes;
+    }
+
+    // Fetch details to send email notification
+    let appRecord = null;
+    let student = null;
+    let job = null;
+
+    try {
+      const appQuery = await query('SELECT * FROM applications WHERE id = ?', [application_id]);
+      if (appQuery.rows && appQuery.rows.length > 0) {
+        appRecord = appQuery.rows[0];
+        const studQuery = await query('SELECT * FROM students WHERE id = ?', [appRecord.student_id]);
+        if (studQuery.rows && studQuery.rows.length > 0) student = studQuery.rows[0];
+        const jobQuery = await query('SELECT * FROM jobs WHERE id = ?', [appRecord.job_id]);
+        if (jobQuery.rows && jobQuery.rows.length > 0) job = jobQuery.rows[0];
+      }
+    } catch (e) {}
+
+    // Fallback if MySQL offline/mock
+    if (!student && appIndex !== -1) {
+      const mockApp = mockDb.applications[appIndex];
+      student = mockDb.students.find(s => s.id === mockApp.student_id) || { fullname: 'Candidate', email: 'demo.student@internedge.edu' };
+      job = mockDb.jobs.find(j => j.id === mockApp.job_id) || { title: 'Software Intern', company_name: 'Corporate Partner' };
+    }
+
+    if (student && job && status) {
+      try {
+        const statusColors = {
+          'Shortlisted': '#b45309',
+          'Accepted': '#059669',
+          'Rejected': '#dc2626',
+          'Under Review': '#2563eb'
+        };
+        const activeColor = statusColors[status] || '#475569';
+
+        const mailHtml = `
+          <div style="font-family: sans-serif; padding: 24px; background: #f8fafc; border-radius: 12px; max-width: 550px; border: 1px solid #e2e8f0;">
+            <span style="background: ${activeColor}; color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase;">Application Pipeline Update</span>
+            <h2 style="color: #0f172a; margin-top: 8px;">Status Changed to: ${status}</h2>
+            <p style="color: #475569; font-size: 15px; line-height: 1.5;">Hi ${student.fullname || student.name || 'Candidate'},</p>
+            <p style="color: #475569; font-size: 15px; line-height: 1.5;">Your job application progress for <strong>${job.title}</strong> at <strong>${job.company_name}</strong> has been updated to **${status}**.</p>
+            ${notes ? `<div style="background: #ffffff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; margin: 15px 0; color: #475569; font-size: 14px;"><strong>Recruiter Notes & Feedback:</strong> ${notes}</div>` : ''}
+            <a href="http://localhost:3000/login" style="background: #2563eb; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; display: inline-block; margin-top: 15px;">View Student Dashboard</a>
+          </div>
+        `;
+
+        await transporter.sendMail({
+          from: `"${job.company_name} Recruiter" <kakadiyasuprince@gmail.com>`,
+          to: student.email,
+          subject: `InternEdge Status Update: ${job.title}`,
+          html: mailHtml
+        });
+      } catch (mailErr) {
+        console.error("Status update email failed:", mailErr.message);
+      }
     }
 
     return NextResponse.json({

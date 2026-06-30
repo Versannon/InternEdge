@@ -178,13 +178,39 @@ export default function StudentRegistrationPage() {
     }
   };
 
-  const handleFileUpload = (type, e) => {
+  const handleFileUpload = async (type, e) => {
     const file = e.target.files[0];
     if (file) {
       if (type === 'pic') {
         setDocuments({ ...documents, profilePicName: file.name });
       } else {
         setDocuments({ ...documents, resumeName: file.name });
+        
+        // Auto parse resume text to extract skills & pre-fill contact info
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+          const res = await fetch('/api/resume/parse', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          if (data.success) {
+            if (data.skills && data.skills.length > 0) {
+              setSkills(prev => ({
+                ...prev,
+                selectedSkills: Array.from(new Set([...prev.selectedSkills, ...data.skills]))
+              }));
+            }
+            setPersonal(prev => ({
+              ...prev,
+              email: prev.email || data.email || '',
+              phone: prev.phone || data.phone || ''
+            }));
+          }
+        } catch (err) {
+          console.error("Failed parsing resume:", err);
+        }
       }
     }
   };
