@@ -3,16 +3,17 @@
 import React, { useState } from 'react';
 import { useAuth } from '../layout';
 import { useRouter } from 'next/navigation';
-import { GraduationCap, Building2, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
+import { GraduationCap, Building2, Lock, Mail, ArrowRight, AlertCircle, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LoginPage() {
   const { loginUser } = useAuth();
   const router = useRouter();
   
-  const [role, setRole] = useState('student'); // 'student' or 'company'
+  const [role, setRole] = useState('student'); // 'student', 'company', or 'admin'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -109,6 +110,29 @@ export default function LoginPage() {
           >
             <Building2 size={16} /> Employer
           </button>
+          <button
+            type="button"
+            onClick={() => handleRoleSwitch('admin')}
+            style={{
+              flex: 1,
+              padding: '0.55rem',
+              borderRadius: 'calc(var(--radius-md) - 2px)',
+              border: 'none',
+              background: role === 'admin' ? '#ffffff' : 'transparent',
+              color: role === 'admin' ? 'var(--text-main)' : 'var(--text-muted)',
+              fontWeight: 600,
+              fontSize: '0.88rem',
+              boxShadow: role === 'admin' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.4rem',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <ShieldAlert size={16} /> Admin
+          </button>
         </div>
 
         {error && (
@@ -139,7 +163,7 @@ export default function LoginPage() {
             <div style={{ position: 'relative' }}>
               <Lock size={16} style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-subtle)' }} />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 className="form-input"
                 style={{ paddingLeft: '2.5rem' }}
@@ -147,6 +171,23 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(prev => !prev)}
+                style={{
+                  position: 'absolute',
+                  right: '0.75rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem'
+                }}
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
             </div>
           </div>
 
@@ -160,14 +201,16 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div style={{ marginTop: '1.6rem', textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-          Don't have an account?{' '}
-          {role === 'student' ? (
-            <Link href="/register/student" style={{ color: 'var(--primary)', fontWeight: 600 }}>Register Student Account</Link>
-          ) : (
-            <Link href="/register/company" style={{ color: 'var(--text-main)', fontWeight: 600 }}>Register Employer Account</Link>
-          )}
-        </div>
+        {role !== 'admin' && (
+          <div style={{ marginTop: '1.6rem', textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+            Don't have an account?{' '}
+            {role === 'student' ? (
+              <Link href="/register/student" style={{ color: 'var(--primary)', fontWeight: 600 }}>Register Student Account</Link>
+            ) : (
+              <Link href="/register/company" style={{ color: 'var(--text-main)', fontWeight: 600 }}>Register Employer Account</Link>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

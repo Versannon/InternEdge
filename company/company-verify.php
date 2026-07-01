@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.php';
+include '../db.php';
 
 $email = $_GET['email'];
 $popupType = '';
@@ -12,22 +12,22 @@ if(isset($_POST['verify'])){
 
     $entered_otp = $_POST['otp'];
 
-    $check = "SELECT * FROM students WHERE email='$email'";
+    $check = "SELECT * FROM companies WHERE email='$email'";
     $result = mysqli_query($conn, $check);
-    $user = mysqli_fetch_assoc($result);
+    $company = mysqli_fetch_assoc($result);
 
-    if($entered_otp == $user['otp']){
+    if($entered_otp == $company['otp']){
 
-        $update = "UPDATE students SET verified=1 WHERE email='$email'";
+        $update = "UPDATE companies SET verified=1 WHERE email='$email'";
         mysqli_query($conn, $update);
 
-        $_SESSION['student_id'] = $user['id'];
-        $_SESSION['student_name'] = $user['fullname'];
+        $_SESSION['company_id'] = $company['id'];
+        $_SESSION['company_name'] = $company['company_name'];
 
         $popupType = 'success';
         $popupTitle = 'OTP Verified';
-        $popupMessage = 'Account created successfully!';
-        $popupRedirect = 'dashboard.php';
+        $popupMessage = 'Company registered successfully!';
+        $popupRedirect = 'company-dashboard.php';
 
     } else {
 
@@ -41,23 +41,27 @@ if(isset($_POST['verify'])){
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
-    <title>Verify OTP</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Verify OTP</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
 <div class="otp-container">
     <div class="otp-box">
-        <h1>Email Verification</h1>
-        <p>Enter your OTP</p>
+        <h1>Company Verification</h1>
+        <p>Enter the OTP sent to your email</p>
+
 
     <form method="POST">
         <input type="text" name="otp" placeholder="Enter OTP" required>
-        <button type="submit" name="verify">Verify</button>
+        <button type="submit" name="verify">Verify Company</button>
     </form>
 </div>
+
 
 </div>
 
@@ -69,7 +73,7 @@ if(isset($_POST['verify'])){
     </div>
 </div>
 
-<script src="script.js"></script>
+<script src="../script.js"></script>
 <?php if($popupType != '') { ?>
 <script>
     showPopup(

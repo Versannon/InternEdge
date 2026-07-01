@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include '../db.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $verifyUrl = 'company-verify.php?email=' . urlencode($email);
             echo "
-            <script src='script.js'></script>
+            <script src='../script.js'></script>
             <script>
                 showPopup(
                     'success',

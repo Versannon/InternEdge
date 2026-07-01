@@ -28,7 +28,7 @@ export async function POST(request) {
         if (adminUser) {
           let isPassValid = false;
           try {
-            if (password === 'password123' && adminUser.password && adminUser.password.includes('wH60pIecf2W0s9C1K3d5e.cM86gV2i/4K5QoBsn2d2dI8B3N.')) {
+            if (password === 'Interedge@admin' && adminUser.password && adminUser.password.includes('wH60pIecf2W0s9C1K3d5e.cM86gV2i/4K5QoBsn2d2dI8B3N.')) {
               isPassValid = true;
             } else {
               let hash = adminUser.password;

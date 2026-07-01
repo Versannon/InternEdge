@@ -9,16 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
             studentBtn.classList.add("active");
             companyBtn.classList.remove("active");
 
-            loginForm.action = "login.php";
-            registerLink.href = "register.html";
+            loginForm.action = "student/login.php";
+            registerLink.href = "student/register.html";
         });
 
         companyBtn.addEventListener("click", function () {
             companyBtn.classList.add("active");
             studentBtn.classList.remove("active");
 
-            loginForm.action = "company-login.php";
-            registerLink.href = "company-register.html";
+            loginForm.action = "company/company-login.php";
+            registerLink.href = "company/company-register.html";
         });
     }
 

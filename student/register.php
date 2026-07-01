@@ -1,12 +1,12 @@
 <?php
-include 'db.php';
+include '../db.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('yourgmail@gmail.com', 'InternEdge');
+            $mail->setFrom('otp@gmail.com', 'InternEdge');
             $mail->addAddress($email);
 
             $mail->isHTML(true);
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $verifyUrl = 'verify.php?email=' . urlencode($email);
             echo "
-            <script src='script.js'></script>
+            <script src='../../script.js'></script>
             <script>
                 showPopup(
                     'success',

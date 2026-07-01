@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.php';
+include '../db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['student_name'] = $user['fullname'];
 
                 echo "
-                <script src='script.js'></script>
+                <script src='../script.js'></script>
                 <script>
                     showPopup(
                         'success',
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
 
                 echo "
-                <script src='script.js'></script>
+                <script src='../script.js'></script>
                 <script>
                     showPopup(
                         'error',
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
 
             echo "
-            <script src='script.js'></script>
+            <script src='../script.js'></script>
             <script>
                 showPopup(
                     'error',
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
 
         echo "
-        <script src='script.js'></script>
+        <script src='../script.js'></script>
         <script>
             showPopup(
                 'error',

@@ -852,9 +852,26 @@ export default function StudentRegistrationPage() {
               <button onClick={() => setShowTermsModal(false)} className="close-btn"><X size={18} /></button>
             </div>
             <div style={{ color: 'var(--text-muted)', fontSize: '0.88rem', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-              <p><strong>1. Academic Integrity:</strong> All registered candidate statistics (CGPA, degree, skills) must be authentic.</p>
-              <p><strong>2. Recruitment Code:</strong> Students accepting employment or internship offers through InternEdge commit to professional engagement.</p>
-              <p><strong>3. Privacy:</strong> Data is shared exclusively with verified hiring corporate partners.</p>
+              <p><strong>1. Age Confirmation:</strong> You confirm that you are at least 18 years old to register and use the platform.</p>
+              <p><strong>2. Accuracy:</strong> All profile details, academic records, skills, and experience are true, complete, and verified.</p>
+              <p><strong>3. Document Authenticity:</strong> Resumes, certificates, transcripts, and IDs uploaded must be genuine.</p>
+              <p><strong>4. Data Sharing Consent:</strong> You authorize InternEdge to share your information with verified hiring partners and companies.</p>
+              <p><strong>5. Placement Use:</strong> Your information may be used to send your profile to companies for internships, jobs, or placement opportunities.</p>
+              <p><strong>6. Full Agreement:</strong> You fully agree that InternEdge may send your details to companies and third-party partners.</p>
+              <p><strong>7. Company Responsibility:</strong> Hiring requirements, selection decisions, offers, and company conduct are the responsibility of the company.</p>
+              <p><strong>8. No Company Liability:</strong> InternEdge is not responsible for company-specific hiring decisions or requirements.</p>
+              <p><strong>9. Requirement Variability:</strong> Each company sets its own eligibility rules, interview process, and offer terms.</p>
+              <p><strong>10. No Guarantee:</strong> InternEdge does not guarantee placement, interviews, or job offers.</p>
+              <p><strong>11. Update Requirement:</strong> You must update your profile promptly whenever your personal or academic information changes.</p>
+              <p><strong>12. Consequences:</strong> Providing false or misleading information may lead to account suspension or removal.</p>
+              <p><strong>13. Verification:</strong> InternEdge may verify your information with institutions, references, or hiring partners.</p>
+              <p><strong>14. Communication Consent:</strong> You consent to receive emails and messages from InternEdge and approved hiring partners.</p>
+              <p><strong>15. Privacy Compliance:</strong> Your information is handled according to the platform privacy policy and applicable law.</p>
+              <p><strong>16. Dispute Scope:</strong> Any hiring dispute is between you and the company, not InternEdge.</p>
+              <p><strong>17. Third-Party Decisions:</strong> Company decisions, application outcomes, and timelines are determined by the company.</p>
+              <p><strong>18. Responsibility:</strong> You accept responsibility for the accuracy of your profile and supporting documents.</p>
+              <p><strong>19. Full Consent:</strong> By accepting, you consent to these terms and authorize InternEdge to use your information for placement activity.</p>
+              <p><strong>20. Policy Acceptance:</strong> By registering, you accept all platform terms, placement policies, privacy rules, and service conditions.</p>
             </div>
             <div style={{ marginTop: '1.5rem', textAlign: 'right' }}>
               <button 
